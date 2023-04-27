@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <title>🦆BPE Chat</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #37393F;
+        }
+
+        #form {
+            background: black;
+            padding: 4px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            height: 48px;
+            box-sizing: border-box;
+        }
+
+        #input {
+            border: none;
+            padding: 0 1rem;
+            flex-grow: 1;
+            border-radius: 2rem;
+            margin: 0.25rem;
+        }
+
+        #input:focus {
+            outline: none;
+        }
+
+        #form>button {
+            background: #333;
+            border: none;
+            padding: 0 1rem;
+            margin: 0.25rem;
+            border-radius: 3px;
+            outline: none;
+            color: #fff;
+        }
+
+        table {
+            position: absolute;
+            top: 40px;
+            border-collapse: separate;
+            width: 100%;
+            padding-bottom: 68px;
+        }
+
+        td {
+            padding-top: 20px;
+        }
+
+        h1 {
+            font-size: 12px;
+            text-align: left;
+            padding: 0px 4px;
+            margin: 1px 0px;
+            color: #fff;
+        }
+
+        h2 {
+            font-size: 16px;
+            text-align: left;
+            padding: 0px 3px;
+            margin: 0px 4px 0px 0px;
+            color: #caccce;
+        }
+
+        #width {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            word-break: break-all;
+        }
+
+        #header {
+            top: 0px;
+            height: 40px;
+            width: 100%;
+            position: fixed;
+            background-color: black;
+            z-index: 1;
+        }
+
+        h1#header_t {
+            font-size: 15px;
+            float: left;
+            color: #fff;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <h1 id="header_t">🦆BPE Chat</h1>
+    </div>
+    <div id="width">
+        <table id="maintable"></table>
+    </div>
+
+    <form id="form" action="">
+        <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        let user = prompt("Enter a Username:", "");
+        socket.emit('chat id', user);
+        var messages = document.getElementById('messages');
+        var form = document.getElementById('form');
+        var input = document.getElementById('input');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('event', { user: user, msg: input.value });
+                input.value = '';
+            }
+        });
+
+        socket.on('chat message', function (msg) {
+            var table = document.getElementById("maintable");
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(-1);
+
+            const h1 = document.createElement("H1");
+            const textNode = document.createTextNode(msg.user);
+            h1.appendChild(textNode);
+            cell1.appendChild(h1);
+
+            const textNodes = document.createTextNode(msg.msg);
+            const h2 = document.createElement("H2");
+            h2.appendChild(textNodes);
+            cell1.appendChild(h2);
+            
+        });
+
+        socket.on('update', function (update) {
+            var table = document.getElementById("maintable");
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(-1);
+
+            const h1 = document.createElement("H1");
+            const textNode = document.createTextNode(update.user);
+            h1.appendChild(textNode);
+            cell1.appendChild(h1);
+
+            const textNodes = document.createTextNode(update.msg);
+            const h2 = document.createElement("H2");
+            h2.appendChild(textNodes);
+            cell1.appendChild(h2);
+            
+        });
+    </script>
+</body>
+
+</html>
