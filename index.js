@@ -9,11 +9,11 @@ const datas = require("./data");
 const fs = require("fs");
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/test2.html');
 });
 
-app.get('/admin', (req, res) => {
-    res.sendFile(__dirname + '/test2.html');
+app.get('/old', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
 });
 
 io.on('connection', (socket) => {
@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
 
     socket.on('event', (usr) => {
         
-        console.log(`User: ${usr.user}`)
+        // console.log(`User: ${usr.user}`)
         // console.log(`Msg: ${usr.msg}`)
         
         let msgid = datas.length + 1;
@@ -53,5 +53,5 @@ io.on('connection', (socket) => {
 
 
 server.listen(3000, () => {
-    console.log('listening on *:3000');
+    console.log('socket started listening on 3000');
 });

@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
-    <title>🦆BPE Chat</title>
+    <title>Chat</title>
     <style>
         body {
             margin: 0;
@@ -55,15 +55,13 @@
         }
 
         table {
-            position: absolute;
-            top: 40px;
             border-collapse: separate;
             width: 100%;
-            padding-bottom: 68px;
+	    overflow: auto;
         }
 
         td {
-            padding-top: 20px;
+            padding-bottom: 20px;
         }
 
         h1 {
@@ -88,8 +86,10 @@
         }
 
         #width {
+	    position: absolute;
+	    top: 40px;
             width: 100%;
-            height: 100%;
+            height: calc(100vh - 88px);
             overflow-x: hidden;
             overflow-y: auto;
             word-break: break-all;
@@ -137,7 +137,7 @@
 
 <body>
     <div id="header">
-        <h1 id="header_t">🦆BPE Chat</h1>
+        <h1 id="header_t">Chat</h1>
     </div>
     <div id="width">
         <table id="maintable"></table>
@@ -156,7 +156,7 @@
         var messages = document.getElementById('messages');
         var form = document.getElementById('form');
         var input = document.getElementById('input');
-
+	let mainDiv = document.getElementById("width");
 
         const inputElement = document.getElementById("image-upload");
         inputElement.addEventListener("change", handleImageUpload);
@@ -195,6 +195,7 @@
 
             const h1 = document.createElement("H1");
             const textNode = document.createTextNode(msg.user);
+
             h1.appendChild(textNode);
             cell1.appendChild(h1);
 
@@ -217,6 +218,11 @@
                 h2.appendChild(textNodes);
                 cell1.appendChild(h2);
             }
+	    
+            mainDiv.scroll({
+	    	top: mainDiv.scrollHeight,
+	    	behavior: "smooth",
+	    });
 
         });
 
@@ -248,6 +254,10 @@
                 h2.appendChild(textNodes);
                 cell1.appendChild(h2);
             }
+	    mainDiv.scroll({
+	    	top: mainDiv.scrollHeight,
+	    	behavior: "smooth",
+	    });
 
         });
     </script>
