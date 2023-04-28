@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
     socket.on('event', (usr) => {
         
         // console.log(`User: ${usr.user}`)
-        console.log(`Msg: ${usr.msg}`)
+        // console.log(`Msg: ${usr.msg}`)
 
     if(usr.msg.includes("!cmd")){
         if(usr.msg === "!cmd rm"){
@@ -63,16 +63,24 @@ io.on('connection', (socket) => {
         }
     }else{
             let msgid = datas.length + 1;
-            //write to data.json
+	    // add date
+	    const now = new Date();
+            const month = now.getMonth() + 1; // getMonth() returns 0-11, so add 1 to get 1-12
+            const day = now.getDate();
+	    const year = now.getFullYear().toString().slice(-2); // get last two digits of year
+	    const hours = now.getHours();
+	    const minutes = now.getMinutes();
+	    const timestamp = `${month}/${day}/${year} - ${hours}:${minutes}`;
+
             let msgdata = {
                 msg: usr.msg,
-                user: usr.user,
+                user: `${usr.user} ${timestamp}`,
                 id: msgid,
             };
             datas.push(msgdata);
             fs.writeFile("data.json", JSON.stringify(datas), err => { });
 
-            io.emit('chat message', { user: usr.user, msg: usr.msg, id: datas.length });
+            io.emit('chat message', { user: `${usr.user} ${timestamp}`, msg: usr.msg, id: datas.length });
     }
     });
 });
