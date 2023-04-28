@@ -56,8 +56,9 @@
 
         table {
             border-collapse: separate;
-            width: 100%;
-	    overflow: auto;
+            width: 100vw;
+	    word-break: break-all;
+	    overflow-wrap: break-word;
         }
 
         td {
@@ -88,9 +89,9 @@
         #width {
 	    position: absolute;
 	    top: 40px;
-            width: 100%;
+            width: 100vw;
             height: calc(100vh - 88px);
-            overflow-x: hidden;
+            overflow-x: wrap;
             overflow-y: auto;
             word-break: break-all;
         }
@@ -162,13 +163,13 @@
         inputElement.addEventListener("change", handleImageUpload);
         function handleImageUpload() {
             const file = inputElement.files[0];
-            const maxSize = 1024 * 1024; // 1 MB
+            const maxSize = 2024 * 2024; // 1 MB
             const reader = new FileReader();
 
-            if (file.size > maxSize) {
-                alert("File is too big!");
-                return;
-            }
+    //        if (file.size > maxSize) {
+      //          alert("File is too big!");
+        //        return;
+          //  }
 
             reader.readAsDataURL(file);
 
