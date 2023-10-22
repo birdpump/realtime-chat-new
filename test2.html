@@ -138,7 +138,7 @@
 
 <body>
     <div id="header">
-        <h1 id="header_t">High Quality Chat</h1>
+        <h1 id="header_t">Birdpump Realtime Chat</h1>
     </div>
     <div id="width">
         <table id="maintable"></table>
@@ -157,7 +157,7 @@
         var messages = document.getElementById('messages');
         var form = document.getElementById('form');
         var input = document.getElementById('input');
-	let mainDiv = document.getElementById("width");
+	    let mainDiv = document.getElementById("width");
 
         const inputElement = document.getElementById("image-upload");
         inputElement.addEventListener("change", handleImageUpload);
@@ -220,10 +220,12 @@
                 cell1.appendChild(h2);
             }
 
-            mainDiv.scroll({
-	    	top: mainDiv.scrollHeight,
-	    	behavior: "smooth",
-	    });
+            setTimeout(function(){
+                mainDiv.scroll({
+                    top: mainDiv.scrollHeight,
+                    behavior: "smooth",
+                });
+            }, 50)
 
         });
 
@@ -255,10 +257,13 @@
                 h2.appendChild(textNodes);
                 cell1.appendChild(h2);
             }
-	    mainDiv.scroll({
-	    	top: mainDiv.scrollHeight,
-	    	behavior: "smooth",
-	    });
+            setTimeout(function(){
+                mainDiv.scroll({
+                    top: mainDiv.scrollHeight,
+                    behavior: "smooth",
+                });
+            }, 50)
+
 
         });
     </script>
